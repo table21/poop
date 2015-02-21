@@ -1,3 +1,4 @@
+// Makes call to Parse backend with position parameter, gets positions data, then sets googlemMap pin locations for
 function getParseData(position) {
   Parse.Cloud.run("restrooms", {lat: position.coords.latitude, lng: position.coords.longitude}, {
     success: function(object) {
@@ -17,7 +18,7 @@ function getParseData(position) {
 
 function initializeMap() {
   var mapProp = {
-    zoom: 10,
+    zoom: 12,
     mapTypeId:google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
@@ -29,7 +30,7 @@ function initializeMap() {
       var infowindow = new google.maps.InfoWindow({
         map: map,
         position: pos,
-        content: 'Location found using HTML5.'
+        content: 'Current Location'
       });
       map.setCenter(pos);
 
