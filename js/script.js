@@ -2,8 +2,8 @@ function getParseData(position) {
   Parse.Cloud.run("restrooms", {lat: position.coords.latitude, lng: position.coords.longitude}, {
     success: function(objects) {
       console.log(objects);
-      object.forEach(function(element, index, array) {
-        var currentToilet = new google.maps.LatLng(element.latitude, element.longitude);
+      objects.forEach(function(element, index, array) {
+        var currentToilet = new google.maps.LatLng(element.location.latitude, element.location.longitude);
         var marker = new google.maps.Marker({
           position: currentToilet,
         });
