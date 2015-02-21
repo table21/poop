@@ -13,10 +13,12 @@
     <!--endparse-->
 
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/scripts.js"></script>
+    <script src="js/script.js"></script>
   </head>
 
   <body>
+    <input >
+
     <div style="display:none" class="error">
       Looks like there was a problem saving the test object. Make sure you've set your application ID and javascript key correctly in the call to <code>Parse.initialize</code> in this file.
     </div>
@@ -31,7 +33,9 @@
     <script type="text/javascript">
       // api keys and init
       Parse.initialize("CLeeiHOj4n2Ihwh5Ff6lcaXGCwqvSxvR8mAu7KR1", "TnxYWDOCVO4qJUalicnuPpduwCd1xsm8T6Tl3s4u");
-      var TestObject = Parse.Object.extend("TestObject");
+
+      // test object
+      /*var TestObject = Parse.Object.extend("TestObject");
       var testObject = new TestObject();
       
       // simple set
@@ -52,7 +56,41 @@
         error: function(myObject, error) {
           $(".error").show();
         }
+      });*/
+
+      var TestLocation = Parse.Object.extend("TestLocation");
+      var testLocation = new TestLocation();
+
+      var point = new Parse.GeoPoint({latitude: 40.0, longitude: -30.0});
+      testLocation.set("location", point);
+
+      // uncomment to save
+      /*testLocation.save({
+        success: function(object) {
+          $(".success code").text(JSON.stringify(object));
+          $(".success").show();
+        },
+        error: function(model, error) {
+          $(".error").show();
+        }
+      });*/
+
+      // User's location
+      var userGeoPoint = testLocation.get("location");
+      // Create a query for places
+      var query = new Parse.Query(TestLocation);
+      // Interested in locations near user.
+      query.near("location", userGeoPoint);
+      // Limit what could be a lot of points.
+      query.limit(10);
+      // Final list of objects
+      query.find({
+        success: function(placesObjects) {
+          $(".success code").text(JSON.stringify(placesObjects));
+          $(".success").show();
+        }
       });
+
 
     </script>
 
