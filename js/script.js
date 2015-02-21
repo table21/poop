@@ -46,4 +46,14 @@ function initializeMap() {
   }
 }
 
+function openBar() {
+  $(document.getElementById('popoutBar')).addClass('barClosed');
+  $(document.getElementById('popoutBar')).removeClass('barOpen');
+}
+
+function closeBar() {
+  $(document.getElementById('popoutBar')).addClass('barOpen');
+  $(document.getElementById('popoutBar')).removeClass('barClosed');
+}
+
 
