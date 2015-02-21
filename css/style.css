@@ -1,3 +1,28 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#mainPage {
+  display: flex;
+}
+
+#popoutBar {
+  overflow: hidden;
+  -webkit-transition: width 2s;
+  transition: width 2s;
+}
+
+.barOpen  {
+  flex-basis: 23%;
+}
+
+.barClosed {
+  flex-basis: 0px;
+}
+
 #googleMap {
 	height: 60vh;
 }
