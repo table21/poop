@@ -3,7 +3,7 @@ function initializeMap() {
     zoom: 14,
     mapTypeId:google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
-    streetViewControl: false/*,
+    streetViewControl: false,
     styles: [{
       "featureType": "water",
       "elementType": "geometry",
@@ -101,7 +101,7 @@ function initializeMap() {
       }, {
         "lightness": 20        
       }]
-    }]*/
+    }]
   };
 
   // Main Map Variable
@@ -157,7 +157,7 @@ function getParseData(position) {
         return marker;
 
       });
-      calcRoute(allMarkers, {lat: position.coords.latitude, lng: position.coords.longitude});
+      //calcRoute(allMarkers, {lat: position.coords.latitude, lng: position.coords.longitude});
     },
     error: function(model, error) {
       $('.error').show();
@@ -181,49 +181,49 @@ function addComment(id, comment) {
 
 
 
-function calcRoute (markers, pos) {
-  var directionsService = new google.maps.DirectionsService();
+// function calcRoute (markers, pos) {
+//   var directionsService = new google.maps.DirectionsService();
   
-  var currentPosition = new google.maps.LatLng(pos.lat, pos.lng);
-  var dest = new google.maps.LatLng(markers[6].position.D, markers[6].position.k);
+//   var currentPosition = new google.maps.LatLng(pos.lat, pos.lng);
+//   var dest = new google.maps.LatLng(markers[6].position.D, markers[6].position.k);
   
-  //var smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos,markers[0].position);
+//   //var smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos,markers[0].position);
 
-  // Linear search
-  //for (var i = 1; i < markers.length; i++) {
-    //if(google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]) < smallestDist) {
-      //smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]);
-    //}
+//   // Linear search
+//   //for (var i = 1; i < markers.length; i++) {
+//     //if(google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]) < smallestDist) {
+//       //smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]);
+//     //}
 
-  //}        
-  // After find other destination in the shortest distance, do directions request
+//   //}        
+//   // After find other destination in the shortest distance, do directions request
   
 
-  /*var request = {
-    origin: pos,
-    desintation: dest, //Find the nearest
-    travelMode: google.maps.TravelMode.WALKING
-  };*/
+//   /*var request = {
+//     origin: pos,
+//     desintation: dest, //Find the nearest
+//     travelMode: google.maps.TravelMode.WALKING
+//   };*/
 
-  var request = {
-    // origin: getCurrentPosition,
-    // destination: dest,
-    origin: 'stanford',
-    destination: 'sfo',
-    travelMode: google.maps.TravelMode.DRIVING,
-  }
+//   var request = {
+//     // origin: getCurrentPosition,
+//     // destination: dest,
+//     origin: 'stanford',
+//     destination: 'sfo',
+//     travelMode: google.maps.TravelMode.DRIVING,
+//   }
 
 
-  directionsService.route(request, function(response, status) {
-    console.log(response);
-      console.log(status);
-    if (status == google.maps.DirectionsStatus.OK) {
-      var directionsDisplay = new google.maps.DirectionsRenderer();
-      directionsDisplay.setMap(new google.maps.Map(document.getElementById("googleMap"), mapProp));
-      directionsDisplay.setDirections(response);
-    }
-  });
-}
+//   directionsService.route(request, function(response, status) {
+//     console.log(response);
+//       console.log(status);
+//     if (status == google.maps.DirectionsStatus.OK) {
+//       var directionsDisplay = new google.maps.DirectionsRenderer();
+//       directionsDisplay.setMap(new google.maps.Map(document.getElementById("googleMap"), mapProp));
+//       directionsDisplay.setDirections(response);
+//     }
+//   });
+// }
 
 function openBar(toilet) {
   $('footer.main').addClass('open');
