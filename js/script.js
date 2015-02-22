@@ -1,5 +1,7 @@
+var mapProp
+
 function initializeMap() {
-  var mapProp = {
+  mapProp = {
     zoom: 14,
     mapTypeId:google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
