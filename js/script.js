@@ -10,18 +10,28 @@ function getParseData(position) {
         });
         google.maps.event.addListener(marker, 'click', function() {
           console.log(marker.toilet);
+          openBar(marker.toilet);
         });
 
         marker.setMap(map);
-
-        google.maps.event.addListener(marker, 'click', function() {
-          openBar(element);
-        });
-
       });
     },
     error: function(model, error) {
       $('.error').show();
+    }
+  });
+}
+
+function addComment(id, comment) {
+  var RefugeComment = Parse.Object.extend("RefugeComment");
+  var refugeComment = new RefugeComment();
+
+  refugeComment.save({"comment_id": id, "text": comment}, {
+    success: function(response) {
+      console.log(response);
+    },
+    error: function(response, error) {
+      console.log(error);
     }
   });
 }
@@ -150,5 +160,30 @@ function initializeMap() {
   } else {
     // Browser doesn't support Geolocation
     alert("Browser doesn't support Geolocation");
+  }
+}
+
+function openBar(toilet) {
+  $('footer.main').addClass('open');
+  $('footer.main section .name').text(toilet.name);
+  $('footer.main section .comments').html("");
+  $('.comments').attr("id", toilet.id);
+  toilet.comments.forEach(function(comment) {
+    $('footer.main section .comments').append('<li class="comment">' +
+                                              comment +
+                                              '</li>');
+  });
+}
+
+function submitComment() {
+  var text = $('.comment-placeholder textarea').val();
+  if (text) {
+    var id = $('.comments').attr("id");
+    $('.comment-placeholder textarea').val("");
+    addComment(id, text);
+    $('footer.main section .comments').append('<li class="comment">' +
+                                                text +
+                                                '</li>');
+    initializeMap();
   }
 }
