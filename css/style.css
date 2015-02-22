@@ -140,6 +140,15 @@ footer.main.open {
         footer.main section .feedback button {
           display: block;
         }
+.fa-arrow-right, .fa-arrow-left {
+  color: rgb(85,74,77);
+  font-size: 1.5em !important;
+}
+  .fa-arrow-right {
+
+  }
+  .fa-arrow-left { 
+  }
 
 
 
