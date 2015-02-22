@@ -144,15 +144,18 @@ function getParseData(position) {
           toilet: element
         });
 
-        google.maps.event.addListener(marker, 'click', function() {
-          console.log(marker.toilet);
-        });
+                  /*google.maps.event.addListener(marker, 'click', function() {
+                    console.log(marker.toilet);
+                    openBar(marker.toilet);
+                  });*/
         marker.setMap(map);
+
         google.maps.event.addListener(marker, 'click', function() {
           openBar(element);
         });
 
         return marker;
+
       });
       calcRoute(allMarkers, {lat: position.coords.latitude, lng: position.coords.longitude});
     },
@@ -162,49 +165,87 @@ function getParseData(position) {
   });
 }
 
+function addComment(id, comment) {
+  var RefugeComment = Parse.Object.extend("RefugeComment");
+  var refugeComment = new RefugeComment();
+
+  refugeComment.save({"comment_id": id, "text": comment}, {
+    success: function(response) {
+      console.log(response);
+    },
+    error: function(response, error) {
+      console.log(error);
+    }
+  });
+}
+
+
+
 function calcRoute (markers, pos) {
   var directionsService = new google.maps.DirectionsService();
   
   var currentPosition = new google.maps.LatLng(pos.lat, pos.lng);
   var dest = new google.maps.LatLng(markers[6].position.D, markers[6].position.k);
-
   
-      //var smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos,markers[0].position);
+  //var smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos,markers[0].position);
 
-      // Linear search
-      //for (var i = 1; i < markers.length; i++) {
-        //if(google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]) < smallestDist) {
-          //smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]);
-        //}
+  // Linear search
+  //for (var i = 1; i < markers.length; i++) {
+    //if(google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]) < smallestDist) {
+      //smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]);
+    //}
 
-      //}        
-      // After find other destination in the shortest distance, do directions request
-      
+  //}        
+  // After find other destination in the shortest distance, do directions request
+  
 
-      /*var request = {
-        origin: pos,
-        desintation: dest, //Find the nearest
-        travelMode: google.maps.TravelMode.WALKING
-      };*/
-    
-      var request = {
-        // origin: getCurrentPosition,
-        // destination: dest,
-        origin: 'stanford',
-        destination: 'sfo',
-        travelMode: google.maps.TravelMode.DRIVING,
-      }
+  /*var request = {
+    origin: pos,
+    desintation: dest, //Find the nearest
+    travelMode: google.maps.TravelMode.WALKING
+  };*/
+
+  var request = {
+    // origin: getCurrentPosition,
+    // destination: dest,
+    origin: 'stanford',
+    destination: 'sfo',
+    travelMode: google.maps.TravelMode.DRIVING,
+  }
 
 
-      directionsService.route(request, function(response, status) {
-        console.log(response);
-          console.log(status);
-        if (status == google.maps.DirectionsStatus.OK) {
-          var directionsDisplay = new google.maps.DirectionsRenderer();
-          directionsDisplay.setMap(new google.maps.Map(document.getElementById("googleMap"), mapProp));
-          directionsDisplay.setDirections(response);
-        }
-      });
+  directionsService.route(request, function(response, status) {
+    console.log(response);
+      console.log(status);
+    if (status == google.maps.DirectionsStatus.OK) {
+      var directionsDisplay = new google.maps.DirectionsRenderer();
+      directionsDisplay.setMap(new google.maps.Map(document.getElementById("googleMap"), mapProp));
+      directionsDisplay.setDirections(response);
     }
+  });
+}
 
+function openBar(toilet) {
+  $('footer.main').addClass('open');
+  $('footer.main section .name').text(toilet.name);
+  $('footer.main section .comments').html("");
+  $('.comments').attr("id", toilet.id);
+  toilet.comments.forEach(function(comment) {
+    $('footer.main section .comments').append('<li class="comment">' +
+                                              comment +
+                                              '</li>');
+  });
+}
 
+function submitComment() {
+  var text = $('.comment-placeholder textarea').val();
+  if (text) {
+    var id = $('.comments').attr("id");
+    $('.comment-placeholder textarea').val("");
+    addComment(id, text);
+    $('footer.main section .comments').append('<li class="comment">' +
+                                                text +
+                                                '</li>');
+    initializeMap();
+  }
+}
