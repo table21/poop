@@ -2,14 +2,13 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
   <title>Page Title</title>
 
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
   
   <!-- stylesheets -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"-->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css" />
 
@@ -23,9 +22,14 @@
   <!--end maps api-->
 
   <!--bootstrap -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script-->
   <!-- end bootstrap-->
   <script src="js/script.js"></script>
+
+
+
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
   <script>
     var map;
@@ -37,7 +41,22 @@
 </head>
 
 <body>
-  <header>
+  <header class="main">
+    <header><img src="img/poop.png" /></header>
+    <section>WHERE TO TWO</section>
+    <footer>Current Toilets</footer>
+  </header>
+
+  <section class="main">
+    <div id="googleMap"></div>
+  </section>
+
+  <footer class="main">
+    <header class="stars"></header>
+    <section></section>
+    <footer></footer>
+  </footer>
+  <!--header>
     <section>
       <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -47,20 +66,16 @@
         </div>
       </nav>
     </section>
-
   </header>
 
 
-  <section id="mainPage">
-    <div class="container">
-      <div class="row">
-        <div id="googleMap" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-      </div>
+  <section id="main-page">
+    <div id="googleMap" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+    <div class="popout closed">
+      <h1>Submit your story</h1>
+      <input  />
     </div>
-    <div id="popoutBar" class="barClosed">
-      asdfk
-    </div>
-  </section>
+  </section-->
 </body>
 
 </html>

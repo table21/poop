@@ -3,78 +3,73 @@ body, html {
   padding: 0;
   width: 100%;
   height: 100%;
+  background: rgb(241,241,228);
 }
 
-#mainPage {
+header.main {
+  width: 100%;
+  text-align: center;
+  color: rgb(85,74,77);
+}
+  header img {
+    width: 10%;
+    padding-top: 2%;
+  }
+  header.main section {
+    font-family: 'Droid Serif', serif;
+    font-size: 1.5em;
+    letter-spacing: 3.5px;
+  }
+  header.main footer {
+    font-family: 'Helvetica-Light', sans-serif;
+    letter-spacing: 5px;
+    font-size: 0.8em;
+  }
+
+i.fa-street-view {
+  position: absolute;
+  bottom: -34px;
+  left: -4px;
+  color: rgb(241,241,228);
+  font-size: 3em;
+}
+section.main {
+  height: 65%;
+  padding: 5% 0 5% 0;
+}
+  section.main #googleMap {
+    width: 100%;
+    height: 100%;
+  }
+  section.main #googleMap > div > div:nth-child(2), 
+  section.main #googleMap > div > div:nth-child(3),
+  section.main #googleMap > div > div.gmnoprint.gm-style-cc, 
+  section.main #googleMap > div > div:nth-child(7),
+  section.main #googleMap > div > div:nth-child(1) > div:nth-child(3) > div:nth-child(4) > div > div:nth-child(1),
+  section.main #googleMap > div > div:nth-child(1) > div:nth-child(3) > div:nth-child(4) > div > div:nth-child(3) {
+    display: none; 
+  }
+
+footer.main {
+  background: white;
+}
+
+
+
+
+/*#mainPage {
   display: flex;
   flex-direction: row;
 }
-
-#popoutBar {
-  overflow: hidden;
-  -webkit-transition: width 2s;
-  transition: width 2s;
-}
-
-.barOpen  {
-  flex-basis: 23%;
-}
-
-.barClosed {
-  flex-basis: 0px;
-}
+  #mainPage .container {
+    width: 100%;
+  }
 
 #googleMap {
-	height: 60vh;
+  height: 60vh;
 }
 .navbar {
-	background-color: gray;
-}
-
-#reviewData {
-  display: none;
-}
-
-.visible {
-  display: block!important;
-}
+  background-color: gray;
+}*/
 
 
-
-/* star ratings: http://codepen.io/jamesbarnett/pen/vlpkh */
-
-.rating { 
-  border: none;
-  float: left;
-}
-
-.rating > input { display: none; } 
-.rating > label:before { 
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005"; /* icon-star */
-}
-
-.rating > .half:before {
-  font-family: FontAwesome;
-  content: "\f089";  /*icon-star-half*/ 
-  position: absolute;
-}
-
-.rating > label { 
-  color: #ddd; 
- float: right; 
-}
-
-/***** CSS Magic to Highlight Stars on Hover *****/
-
-.rating > input:checked ~ label, /* show gold star when clicked */
-.rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
-
-.rating > input:checked + label:hover, /* hover current star when changing rating */
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 

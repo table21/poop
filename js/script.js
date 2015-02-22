@@ -6,7 +6,12 @@ function getParseData(position) {
         var currentToilet = new google.maps.LatLng(element.location.latitude, element.location.longitude);
         var marker = new google.maps.Marker({
           position: currentToilet,
+          toilet: element
         });
+        google.maps.event.addListener(marker, 'click', function() {
+          console.log(marker.toilet);
+        });
+
         marker.setMap(map);
 
         google.maps.event.addListener(marker, 'click', function() {
@@ -24,8 +29,108 @@ function getParseData(position) {
 function initializeMap() {
   var mapProp = {
     zoom: 14,
-    mapTypeId:google.maps.MapTypeId.ROADMAP
-  };
+    mapTypeId:google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: false,
+    streetViewControl: false,
+    styles: [{
+              "featureType": "water",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#000000"
+              }, {
+                "lightness": 17
+              }]
+            }, {
+              "featureType": "landscape",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#000000"
+              }, {
+                "lightness": 20
+              }]
+            }, {
+              "featureType": "road.highway",
+              "elementType": "geometry.fill",
+              "stylers": [{
+                "color": "#6B6B6B"
+              }, {
+                "lightness": 17
+              }]
+            }, {
+              "featureType": "road.highway",
+              "elementType": "geometry.stroke",
+              "stylers": [{
+                "color": "#000000"
+              }, {
+                "lightness": 29
+              }, {
+                "weight": 0.2
+              }]
+            }, {
+              "featureType": "road.arterial",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#000000"
+              }, {
+                "lightness": 18
+              }]
+            }, {
+              "featureType": "road.local",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#565656"
+              }, {
+                "lightness": 16
+              }]
+            }, {
+              "featureType": "poi",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#000000"
+              }, {
+                "lightness": 21
+              }]
+            }, {
+              "elementType": "labels.text.stroke",
+              "stylers": [{
+                "visibility": "on"
+              }, {
+                "color": "#000000"
+              }, {
+                "lightness": 16
+              }]
+            }, {
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "saturation": 36
+              }, {
+                "color": "#6E6E6E"
+              }, {
+                "lightness": 40
+              }]
+            }, {
+              "elementType": "labels.icon",
+              "stylers": [{
+                "visibility": "off"
+              }]
+            }, {
+              "featureType": "transit",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#000000"
+              }, {
+                "lightness": 19
+              }]
+            }, {
+              "featureType": "administrative",
+              "elementType": "geometry.fill",
+              "stylers": [{
+                "color": "#000000"
+              }, {
+                "lightness": 20        
+              }]
+            }]
+          };
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
   if(navigator.geolocation) {
@@ -35,12 +140,10 @@ function initializeMap() {
       var infowindow = new google.maps.InfoWindow({
         map: map,
         position: pos,
-        content: 'Current Location'
+        content: '<i class="fa fa-street-view"></i>'
       });
       map.setCenter(pos);
-
       getParseData(position);
-
     }, function(e) {
       console.log(e);
     });
@@ -49,50 +152,3 @@ function initializeMap() {
     alert("Browser doesn't support Geolocation");
   }
 }
-
-function openBar(data) {
-  $(document.getElementById('popoutBar')).addClass('barOpen');
-  $(document.getElementById('popoutBar')).removeClass('barClosed');
-  $(document.getElementById('popoutBar')).html(getToiletHTML(data));
-}
-
-function closeBar() {
-  $(document.getElementById('popoutBar')).addClass('barClosed');
-  $(document.getElementById('popoutBar')).removeClass('barOpen');
-}
-
-function getToiletHTML(data) {
-  var html = '';
-  html += '<legend>' + data.name + '</legend>';
-  html += '<form><textarea placeholder="leave a comment" onclick="writeReview()"></textarea></form>' +
-      '<div id="reviewData">' + stuff() +
-      '</div>'
-  html += stuff();
-  html += '<div>';
-  // for (var i = 0; i < data.comments.length; i ++) {
-  //   html += '<div>' + comments[i] + '</div>';
-  // }
-  html += '</div>';
-  return html;
-}
-
-function writeReview() {
-  $('#reviewData').addClass('visible');
-}
-
-function stuff() {
-  var rating = '<fieldset class="rating">' +
-      '<input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>' +
-      '<input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>' +
-      '<input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>' +
-      '<input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>' +
-      '<input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>' +
-      '<input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>' +
-      '<input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>' +
-      '<input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>' +
-      '<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>' +
-      '<input type="radio" id="starhalf" name="rating" value=".5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>' +
-  '</fieldset>'
-  return rating;
-}
-
