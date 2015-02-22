@@ -1,11 +1,16 @@
-var mapProp
+var mapProp;
+// Keeps track of the index of the nearest bathoom when you cylce through them
+var markerIndex = 0;
+
+var globalMarkerList;
+var globalPosition;
 
 function initializeMap() {
   mapProp = {
     zoom: 14,
     mapTypeId:google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
-    streetViewControl: false/*,
+    streetViewControl: false,
     styles: [{
       "featureType": "water",
       "elementType": "geometry",
@@ -103,15 +108,14 @@ function initializeMap() {
       }, {
         "lightness": 20        
       }]
-    }]*/
+    }]
   };
 
   // Main Map Variable
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
+  var pos;
   // Assigns the user positions based on geolocation HTML5
   if(navigator.geolocation) {
-    var pos;
 
     navigator.geolocation.getCurrentPosition(function(position) {
 
@@ -126,6 +130,7 @@ function initializeMap() {
       map.setCenter(pos);
       // Gets the parse data for surrounding bathrooms
       getParseData(position);
+      globalPosition = position;
     }, function(e) {
       console.log(e); // Prints data array?
     });
@@ -139,27 +144,25 @@ function initializeMap() {
 function getParseData(position) {
   Parse.Cloud.run("restrooms", {lat: position.coords.latitude, lng: position.coords.longitude}, {
     success: function(objects) {
-      var allMarkers = objects.map(function(element, index, array) {
+      globalMarkerList = objects.map(function(element, index, array) {
         var currentToilet = new google.maps.LatLng(element.location.latitude, element.location.longitude);
         var marker = new google.maps.Marker({
           position: currentToilet,
           toilet: element
         });
 
-                  /*google.maps.event.addListener(marker, 'click', function() {
-                    console.log(marker.toilet);
-                    openBar(marker.toilet);
-                  });*/
-        marker.setMap(map);
+          /*google.maps.event.addListener(marker, 'click', function() {
+            console.log(marker.toilet);
+            openBar(marker.toilet);
+          });*/
+      marker.setMap(map);
 
-        google.maps.event.addListener(marker, 'click', function() {
-          openBar(element);
-        });
-
-        return marker;
-
+      google.maps.event.addListener(marker, 'click', function() {
+        openBar(element);
       });
-      calcRoute(allMarkers, {lat: position.coords.latitude, lng: position.coords.longitude});
+      return marker;
+    });
+
     },
     error: function(model, error) {
       $('.error').show();
@@ -182,43 +185,21 @@ function addComment(id, comment) {
 }
 
 
-
+// Takes array of all markers on map as paramets and user's position
 function calcRoute (markers, pos) {
   var directionsService = new google.maps.DirectionsService();
   
   var currentPosition = new google.maps.LatLng(pos.lat, pos.lng);
-  var dest = new google.maps.LatLng(markers[6].position.D, markers[6].position.k);
+  var dest = new google.maps.LatLng(markers[markerIndex].position.k, markers[markerIndex].position.D);
   
-  //var smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos,markers[0].position);
-
-  // Linear search
-  //for (var i = 1; i < markers.length; i++) {
-    //if(google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]) < smallestDist) {
-      //smallestDist = google.maps.geometry.spherical.computeDistanceBetween(pos, markers[i]);
-    //}
-
-  //}        
-  // After find other destination in the shortest distance, do directions request
-  
-
-  /*var request = {
-    origin: pos,
-    desintation: dest, //Find the nearest
-    travelMode: google.maps.TravelMode.WALKING
-  };*/
-
   var request = {
     // origin: getCurrentPosition,
     // destination: dest,
-    origin: 'stanford',
-    destination: 'sfo',
+    origin: currentPosition,
+    destination: dest,
     travelMode: google.maps.TravelMode.DRIVING,
   }
-
-
   directionsService.route(request, function(response, status) {
-    console.log(response);
-      console.log(status);
     if (status == google.maps.DirectionsStatus.OK) {
       var directionsDisplay = new google.maps.DirectionsRenderer();
       directionsDisplay.setMap(new google.maps.Map(document.getElementById("googleMap"), mapProp));
@@ -234,9 +215,11 @@ function openBar(toilet) {
   $('.comments').attr("id", toilet.id);
   toilet.comments.forEach(function(comment) {
     $('footer.main section .comments').append('<li class="comment">' +
-                                              comment +
-                                              '</li>');
+      comment +
+      '</li>');
   });
+  console.log(toilet);
+  calcRoute(globalMarkerList, {lat: toilet.location._latitude, lng: toilet.location._longitude});
 }
 
 function submitComment() {
@@ -246,8 +229,8 @@ function submitComment() {
     $('.comment-placeholder textarea').val("");
     addComment(id, text);
     $('footer.main section .comments').append('<li class="comment">' +
-                                                text +
-                                                '</li>');
+      text +
+      '</li>');
     initializeMap();
   }
 }
