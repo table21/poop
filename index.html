@@ -30,12 +30,18 @@
 
   <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Economica:400,400italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
 
   <script>
     var map;
     $(document).ready(function() {
       Parse.initialize("CLeeiHOj4n2Ihwh5Ff6lcaXGCwqvSxvR8mAu7KR1", "TnxYWDOCVO4qJUalicnuPpduwCd1xsm8T6Tl3s4u");
       initializeMap(); 
+
+      $('footer.main footer').click(function() {
+        $('footer.main').removeClass('open');
+      })
     });
   </script>
 </head>
@@ -44,7 +50,7 @@
   <header class="main">
     <header><img src="img/poop.png" /></header>
     <section>WHERE TO TWO</section>
-    <footer>Current Toilets</footer>
+    <footer>Toilets Everywhere</footer>
   </header>
 
   <section class="main">
@@ -52,30 +58,26 @@
   </section>
 
   <footer class="main">
-    <header class="stars"></header>
-    <section></section>
-    <footer></footer>
-  </footer>
-  <!--header>
+    <header class="clickable"><div class="one"></div><div class="two"></div></header>
     <section>
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img alt="Brand" src=""></a>
-          </div>
-        </div>
-      </nav>
+      <div class="name"></div>
+      <div class="stars">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+      </div>
+      <div class="comment-header">What do fellow poopers say:</div>
+      <ul class="comments"></ul>
+      <div class="feedback">
+        <div class="placeholder-header">Leave a pile:</div>
+        <div class="comment-placeholder"><textarea></textarea></div>
+        <button onclick="submitComment();">Submit</button>
+      </div>
     </section>
-  </header>
-
-
-  <section id="main-page">
-    <div id="googleMap" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-    <div class="popout closed">
-      <h1>Submit your story</h1>
-      <input  />
-    </div>
-  </section-->
+    <footer> Close </footer>
+  </footer>
 </body>
 
 </html>

@@ -4,6 +4,7 @@ body, html {
   width: 100%;
   height: 100%;
   background: rgb(241,241,228);
+  overflow: hidden;
 }
 
 header.main {
@@ -51,9 +52,94 @@ section.main {
   }
 
 footer.main {
-  background: white;
-}
+  background: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  bottom: -72%;
+  right: 0;
+  left: 0;
+  margin: auto;
+  height: 80%;
+  width: 80%;
 
+  -webkit-transition: bottom ease 1s;
+  -moz-transition: bottom ease 1s;
+  -o-transition: bottom ease 1s;
+  transition: bottom ease 1s;
+}
+footer.main.open {
+  bottom: 0;
+} 
+  footer.main header {
+    background: white;
+    padding: 0 10% 0 10%;
+    height: 10%;
+  }
+    footer.main div.one {
+      border-bottom: 1px solid rgb(85, 74, 77);
+      height: 45%;
+    }
+    footer.main div.two {
+      border-bottom: 1px solid rgb(85, 74, 77);
+      height: 10%;
+    }
+  footer.main footer {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    text-align: center;
+    color: rgb(85,74,77);
+  }
+  footer.main section {
+    overflow: scroll;
+  }
+    footer.main section .comment-header {
+      font-family: 'Helvetica-Light', sans-serif;
+      width: 100%;
+      padding: 7% 12% 2% 12%;
+    }
+      footer.main section div.name {
+        width: 100%;
+        color: rgb(85,74,77);
+        text-align: center;
+        font-family: 'Droid Serif', serif;
+        padding: 5% 2% 5% 2%;
+      }
+      footer.main section div.stars {
+        width: 100%;
+        color: rgb(85,74,77);
+        text-align: center;
+        font-family: 'Droid Serif', serif;
+        padding: 0 2% 5% 2%;
+      }
+      footer.main section .comment {
+        margin-left: 6%;
+        padding: 2% 0%;
+        font-family: 'Dancing Script', cursive;
+      }
+      footer.main section .comments {
+        margin: 0 0 0 7%;
+        overflow: scroll;
+        height: 7em;
+      }
+      footer.main section .feedback {
+        padding: 5% 10%;
+        font-family: 'Helvetica-Light', sans-serif;
+      }
+        footer.main section .feedback .placeholder-header {
+          padding-left: 2%;
+        }
+        footer.main section .feedback .comment-placeholder {
+          width: 100%;
+          resize: none;
+        }
+          footer.main section .feedback .comment-placeholder textarea {
+            width: 100%;
+            resize: none;
+            border: 1px solid rgba(85, 74, 77, 0.8);
+          }
+        footer.main section .feedback button {
+          display: block;
+        }
 
 
 
